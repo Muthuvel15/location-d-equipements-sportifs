@@ -10,6 +10,7 @@ import ProductList from './components/ProductList';
 import Cart from './components/Cart';
 import Login from './components/Login';
 import AdminProductManagement from './components/AdminProductManagement';
+import Signup from './components/Signup';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin/products" element={<AdminProductManagement />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </div>
       </Router>
