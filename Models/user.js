@@ -3,7 +3,7 @@ const mongoose=require('mongoose')
 
  const UserSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
-    lastName: { type: [String], required: true },
+    lastName: { type: String, required: true },
     phone: {
       type: String,
       required: true,
@@ -17,13 +17,13 @@ const mongoose=require('mongoose')
     password: {
       type: String,
       required: true,
-      minlength: 6
+      minlength: 7
     },
     role: { type: String, enum: ['adherent', 'admin'], default: 'adherent' }
 
   });
   
-  const User = mongoose.model('Product', UserSchema);
+  const User = mongoose.model('user', UserSchema,'user');
 
 module.exports = User;
  

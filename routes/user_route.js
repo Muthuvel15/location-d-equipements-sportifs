@@ -1,11 +1,16 @@
 const express = require('express');
-const router = express.Router();
-const UserController = require('../controllers/usercontroller');
+const Usertrl = require('../controllers/usercontroller');
 // Importez d'autres contrôleurs et modèles nécessaires
+const router = express.Router()
 
-// Définissez vos routes
-router.post('/users', UserController.createUser);
-router.get('/users', UserController.getUsers);
-// Ajoutez d'autres routes pour les autres fonctionnalités de votre application
+// Définir les routes
+router.post('/', Usertrl.createUser)
+router.put('/:id', Usertrl.updateUser)
+router.delete('/:id', Usertrl.deleteuser)
+router.get('/:id', Usertrl.getuserById)
+router.get('/', Usertrl.getUsers)
+
+
+
 
 module.exports = router;

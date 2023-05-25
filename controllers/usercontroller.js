@@ -3,41 +3,93 @@
 
 const User = require('../Models/user');
 
-// Méthode pour créer un nouvel utilisateur
-exports.createUser = async (req, res) => {
-  try {
-    // Récupérer les données du corps de la requête
-    const { firstName, lastName, phone, email, password, role } = req.body;
 
-    // Créer un nouvel utilisateur
-    const newUser = new User({ firstName, lastName, phone, email, password, role });
-
-    // Enregistrer l'utilisateur dans la base de données
-    const savedUser = await newUser.save();
-
-    // Envoyer la réponse
-    res.status(201).json(savedUser);
-  } catch (error) {
-    // Gérer les erreurs
-    res.status(500).json({ error: error.message });
+createUser = (req, res) => {
+  const body = req.body
+// console.log(body)
+  if (!body) {
+      return res.status(400).json({
+          success: false,
+          error: 'You must provide a user',
+      })
   }
-};
 
-// Méthode pour récupérer tous les utilisateurs
-exports.getUsers = async (req, res) => {
-  try {
-    // Récupérer tous les utilisateurs depuis la base de données
-    const users = await User.find();
+  const user = new User(body)
 
-    // Envoyer la réponse
-    res.json(users);
-  } catch (error) {
-    // Gérer les erreurs
-    res.status(500).json({ error: error.message });
+  if (!user) {
+      return res.status(400).json({ success: false, error: err })
   }
-};
 
-// Autres méthodes de contrôleur pour les opérations CRUD sur les utilisateurs
-// ...
+  user
+      .save()
+      .then(() => {
+          return res.status(201).json({
+              success: true,
+              id: user._id,
+              message: 'user created!',
+          })
+      })
+      .catch(err => {
+          return res.status(400).json({
+              error:err,
+              message: 'user not created!',
+          })
+      })
+}
+
+updateUser = async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: req.body },
+      { new: true }
+    ).exec();
+    if (!user) {
+      return res.status(404).json({ success: false, error: `user not found` });
+    }
+    return res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error.message });
+  }
+}
+deleteuser = async (req, res) => {
+  try {
+    const user = await User.findOneAndDelete({ _id: req.params.id }).exec();
+    if (!user) {
+      return res.status(404).json({ success: false, error: `user not found` });
+    }
+    return res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error.message });
+  }
+}
 
 
+getuserById = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id }).exec();
+    if (!user) {
+      return res.status(404).json({ success: false, error: `user not found` });
+    }
+    return res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error.message });
+  }
+}
+getUsers = async (req, res) => {
+    
+  const users = await User.find({}).exec();
+  if (!users.length) {
+      return res.status(404).json({ success: false, error: 'user not found' });
+  }
+  return res.status(200).json({ success: true, data: users });
+
+}
+module.exports = {
+  createUser,
+  updateUser,
+  deleteuser,
+  getuserById,
+  getUsers
+  
+}

@@ -9,12 +9,17 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  theme: {
+    type: String,
+    required: true
+  },
   description: {
     type: String,
     required: true
-  }
+  },
+  image: { type: String, required: true }
 });
 
-const Product = mongoose.model('Product', ProductSchema);
+const Product = mongoose.model('product', ProductSchema);
 
 module.exports = Product;
