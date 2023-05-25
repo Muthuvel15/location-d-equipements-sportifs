@@ -8,7 +8,6 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Handle form submission logic
     console.log('Form submitted:', { firstName, lastName, email, password });
     // Reset form fields
     setFirstName('');
