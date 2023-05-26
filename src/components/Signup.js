@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
+import { signup } from '../api';
 
 function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleSubmit = (e) => {
+  
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', { firstName, lastName, email, password });
-    // Reset form fields
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setPassword('');
+    try {
+      const userData = { firstName, lastName, email, password };
+      console.log('Form input values:', userData); 
+      const response = await signup(userData);
+      console.log('User registered:', response.data);
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      console.error('Error registering user:', error);
+    }
   };
+
 
   return (
     <div className="container">
