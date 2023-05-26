@@ -9,8 +9,11 @@ import Home from './components/Home';
 import ProductList from './components/ProductList';
 import Cart from './components/Cart';
 import Login from './components/Login';
-import AdminProductManagement from './components/AdminProductManagement';
+// import AdminProductManagement from './components/AdminProductManagement';
 import Signup from './components/Signup';
+import AdminDashboard from './components/Admin_Dashbord';
+import ProductManagementPage from './components/ProductManagementPage';
+import UserManagementPage from './components/UserManagementPage';
 
 
 function App() {
@@ -24,7 +27,8 @@ function App() {
             <Route path="/products" element={<ProductList />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/admin/products" element={<AdminProductManagement />} />
+            <Route path="/admin/*" element={<AdminRoutes />} />
+
             <Route path="/signup" element={<Signup />} />
           </Routes>
         </div>
@@ -32,5 +36,17 @@ function App() {
     </div>
   );
 }
+
+
+function AdminRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<AdminDashboard />} />
+      <Route path="/product-management" element={<ProductManagementPage />} />
+      <Route path="/user-management" element={<UserManagementPage />} />
+    </Routes>
+  );
+}
+
 
 export default App;
